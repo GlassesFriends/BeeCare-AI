@@ -85,6 +85,7 @@ LOCAL_APPS = [
     # 'apps.reaction',
     'apps.sighting',
     'apps.wiki',
+    'apps.formtest',
 ]
 
 # |=========================================|
@@ -172,12 +173,12 @@ CSRF_TRUSTED_ORIGINS = [
 # |=| jamás se deberá utilizar en         |=|
 # |=| producción.                         |=|
 # |=========================================|
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / config('SQL_DB_D'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / config('SQL_DB_D'),
+    }
+}
  
 # |=========================================|
 # |=====| BASE DE DATOS DE PRODUCCIÓN |=====|
@@ -193,18 +194,18 @@ CSRF_TRUSTED_ORIGINS = [
 # |=| de bases de datos, de [D]esarrollo, |=|
 # |=| de pruebas[T] y de [P]roducción.    |=|
 # |=========================================|
-DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': config('SQL_DB_T'),
-        'USER': config('SQL_USER'),
-        'PASSWORD': config('SQL_PASSWORD'),
-        'HOST': 'beecare.database.windows.net',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-            },
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': config('SQL_DB_T'),
+#         'USER': config('SQL_USER'),
+#         'PASSWORD': config('SQL_PASSWORD'),
+#         'HOST': 'beecare.database.windows.net',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#             },
+#     }
+# }
 
 # |=============================================================|
 # |===============|  Validación de contraseñas  |===============|
@@ -231,7 +232,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Tijuana'
 
 USE_I18N = True
 
