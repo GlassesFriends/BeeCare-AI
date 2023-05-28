@@ -85,6 +85,7 @@ LOCAL_APPS = [
     # 'apps.reaction',
     'apps.sighting',
     'apps.wiki',
+    'apps.formtest',
 ]
 
 # |=========================================|
@@ -178,7 +179,48 @@ CSRF_TRUSTED_ORIGINS = [
 #         'NAME': BASE_DIR / config('SQL_DB_D'),
 #     }
 # }
- 
+
+# |=================================================|
+# |=========|     BASE DE DATOS GLOBAL    |=========|
+# |=================================================|
+# |=|        Esta conexión de base de datos       |=|
+# |=|       sirve para realizar la conexion a     |=|
+# |=|       distintos SGBD, en el caso de que     |=|
+# |=|       la cadena de conexión que se este     |=|
+# |=|       configurando no posea alguno de los   |=|
+# |=|       atributos, deberá de dejarse en       |=|
+# |=|       blanco.                               |=|
+# |=================================================|
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# |=========================================|
+# |=| Está condicional se usa en el caso  |=|
+# |=| de que el SGBD sea diferente a      |=|
+# |=| sqlite3.                            |=|
+# |=========================================|
+if config('DB_ENGINE',default='db.sqlite3') != 'db.sqlite3':
+    DATABASES['default']['NAME'] = config('DB_NAME')
+    DATABASES['default']['ENGINE'] = config('DB_ENGINE')
+    DATABASES['default']['USER'] = config('DB_USER')
+    DATABASES['default']['PASSWORD'] = config('DB_PASSWORD') 
+    DATABASES['default']['HOST'] = config('DB_HOST')
+    DATABASES['default']['PORT'] = config('DB_PORT', default='')
+
+# |=========================================|
+# |=| Está condicional es solo en el caso |=|
+# |=| de uso de mssql, ya que, este       |=|
+# |=| requiere de un driver para la conex.|=|
+# |=========================================|
+    if config('DB_ENGINE',default='') == 'mssql':
+        DATABASES['default']['OPTIONS'] = {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        }
+
 # |=========================================|
 # |=====| BASE DE DATOS DE PRODUCCIÓN |=====|
 # |=========================================|
@@ -193,18 +235,18 @@ CSRF_TRUSTED_ORIGINS = [
 # |=| de bases de datos, de [D]esarrollo, |=|
 # |=| de pruebas[T] y de [P]roducción.    |=|
 # |=========================================|
-DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': config('SQL_DB_T'),
-        'USER': config('SQL_USER'),
-        'PASSWORD': config('SQL_PASSWORD'),
-        'HOST': 'beecare.database.windows.net',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
-            },
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': config('SQL_DB_T'),
+#         'USER': config('SQL_USER'),
+#         'PASSWORD': config('SQL_PASSWORD'),
+#         'HOST': 'beecare.database.windows.net',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#             },
+#     }
+# }
 
 # |=============================================================|
 # |===============|  Validación de contraseñas  |===============|
@@ -231,7 +273,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Tijuana'
 
 USE_I18N = True
 
